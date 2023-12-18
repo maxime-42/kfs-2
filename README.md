@@ -30,6 +30,7 @@ Each entry in the catalog (GDT) describes a specific section or category of book
 | **Executable:**  | For code segments, specifies whether the segment is executable (1 for executable, 0 for not executable). For data segments, specifies whether the segment is conforming (1 for conforming, 0 for not conforming).  |
 |**Granularity**|Segmentation Granularity In memory segmentation, the granularity refers to the size of individual memory segments. Each segment has a base address and a limit, and the granularity determines the size of each segment. For example, if the granularity is 4 KB, each segment is 4 KB in size, and the system can allocate memory in 4 KB chunks|
 
+[GDT implementation property](https://www.youtube.com/watch?v=Wh5nPn2U_1w)
 
 # Segment
 
