@@ -43,13 +43,24 @@ The GDT is loaded into the processor's memory management unit (MMU), which uses 
 #### Analogie 
 Imagine a library with a central catalog that contains information about all the books available in the library. This catalog is like the GDT. It's a system-wide reference that provides details about different categories of books, such as fiction, non-fiction, and reference materials.
 Each entry in the catalog (GDT) describes a specific section or category of books, including its location, access rules (who can access it), and any special conditions (such as borrowing restrictions). The catalog is managed centrally and used by everyone in the library to find and access books.
-| name | Description |
-| ------ | ------ |
-| base address | The base address refers to the starting memory address of a memory segment. |
-| limit | The limit is the size of the segment, specifying how many bytes from the base address are accessible |
-| access | [plugins/googledrive/README.md][PlGd] |
-| selector | A segment selector is a numeric value stored in a segment register. It is used in conjunction with an offset to form a logical address. The combination of a segment selector and an offset produces a unique address in memory. The offset is typically a 16-bit value that represents a location within the segment.  |
-| Granularity | Segmentation Granularity In memory segmentation, the granularity refers to the size of individual memory segments. Each segment has a base address and a limit, and the granularity determines the size of each segment. For example, if the granularity is 4 KB, each segment is 4 KB in size, and the system can allocate memory in 4 KB chunks. |
+
+selector : A segment selector is a numeric value stored in a segment register. It is used in conjunction with an offset to form a logical address. The combination of a segment selector and an offset produces a unique 
+
+
+## Definitions of properties:
+
+#### Each entry of GDT have this follow property:<br/>
+
+| Property name   | definition  |
+| ------------ | ------------ |
+| **Base Address:**  |The base address of the segment. Specifies the starting   |
+|   **Limit**| The limit of the segment, indicating the size of the segment.  |
+| **Type**  |  Indicates whether the segment is a code segment or a data segment. |
+| **Privilege Level**  | Specifies the privilege level of the segment. Ring 0 is the most privileged (kernel mode), and Ring 3 is the least privileged (user mode  |
+| **Present**  | Indicates whether the segment is present in memory (1 for present, 0 for not present).  |
+| **Read/Write**  |For data segments, specifies whether the segment is readable (1 for readable, 0 for not readable). For code segments, specifies whether the segment is writable (1 for writable, 0 for not   |
+| **Executable:**  | For code segments, specifies whether the segment is executable (1 for executable, 0 for not executable). For data segments, specifies whether the segment is conforming (1 for conforming, 0 for not conforming).  |
+|**Granularity**|Segmentation Granularity In memory segmentation, the granularity refers to the size of individual memory segments. Each segment has a base address and a limit, and the granularity determines the size of each segment. For example, if the granularity is 4 KB, each segment is 4 KB in size, and the system can allocate memory in 4 KB chunks|
 
 
 ## Real mode
