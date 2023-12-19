@@ -35,12 +35,20 @@ Each entry in the catalog (GDT) describes a specific section or category of book
 # Segment
 
 In the context of computer architecture, a memory segment refers to a contiguous block of memory with a specific purpose or attributes. Memory segmentation is a memory management technique used in certain architectures, such as x86 and x86-64. Segmentation divides the memory into logical segments, each with its own base address and size.
-- [Code Segment] - Also known as the text segment, this is where the executable code of a program is stored. It includes instructions that the processor will execute
-- [Data Segment] - The data segment contains global and static variables used by the program. This segment is further divided into initialized and uninitialized data sections.
-- [Stack Segment] - The stack segment is used for the program's runtime stack. It stores local variables, function parameters, and return addresses. The stack operates in a last-in, first-out (LIFO) manner.
-- [Heap Segment] - The heap segment is used for dynamic memory allocation. It is where the program can request memory during its execution, and the allocation is managed by functions like malloc and free.
-To clarify:
+The x86 line of computers have 6 segment registers (CS, DS, ES, FS, GS, SS). They are totally independent of one another.
 
+| Register         | Purpose                                                                       | Usage                                                                                                                                                               |
+|------------------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **CS (Code Segment)**   | Contains the selector for the code segment, defining base address and size. | Instructions fetched for execution are retrieved from the memory location specified by the Code Segment selector.                                                |
+| **DS (Data Segment)**   | Contains the selector for the data segment, used for general data storage.  | Data operands for instructions (e.g., memory access) are retrieved from the memory location specified by the Data Segment selector.                                 |
+| **ES (Extra Segment)**   | Historically an extra data segment for additional data storage.              | Used with string manipulation instructions for extra data storage. In modern systems, often set to the same value as the Data Segment.                               |
+| **FS and GS (Additional Segments)** | Additional data segments beyond Code and Data segments.             | Provide extra segment selectors for data storage, used in more complex memory models. In some OS, may have specific purposes like thread-local storage.          |
+| **SS (Stack Segment)**   | Contains the selector for the stack segment, used for the program stack.    | Stack Segment selector specifies base address and size of the stack segment. Used for storing local variables, function parameters, and return addresses.           |
+
+In modern operating systems and applications, especially those using a flat memory model, it's common to set most of these segment registers to the same value to simplify memory access. In protected mode and long mode (on x86-64), segmentation is often used for privilege separation and memory protection.
+
+
+To clarify:
 Each of these segment registers is 16 bits wide means that the values these registers can hold are 16 bits in size.
 The registers themselves may have a physical size that is larger than 16 bits, but they are designed to hold 16-bit values.
 So, while the registers are physically located in the processor, they operate based on 16-bit values for memory segmentation purposes. The actual data they hold, the segment selectors, are used to reference specific segments in memory.
