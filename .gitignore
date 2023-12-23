@@ -1,0 +1,100 @@
+# Compiled object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Executables
+*.exe
+*.out
+*.app
+*.so
+
+# Compiled Dynamic libraries
+*.dll
+*.dylib
+
+# Compiled Static libraries
+*.a
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+compile_commands.json
+
+# Dependency directories
+/dependencies/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code directories
+.vscode/
+
+# Code::Blocks
+*.depend
+
+# SlickEdit
+*.vpw
+*.vpj
+*.aps
+
+# Xcode
+*.dSYM/
+
+# Eclipse
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# IntelliJ
+.idea/
+
+# Eclipse
+.classpath
+.project
+
+# NetBeans
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Tilde files
+*~
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
