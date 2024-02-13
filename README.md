@@ -97,3 +97,27 @@ Real mode is commonly used during the boot process of a computer system. Boot lo
 
 It's important to note that while real mode is still present in modern x86 processors for compatibility reasons, contemporary operating systems generally switch to protected mode or long mode (for 64-bit systems) to take advantage of advanced features and better memory protection mechanisms.
 
+# Protected mode
+
+Protected mode is a mode of operation for x86 processors that provides hardware-level memory protection, multitasking, and privilege levels. It's a feature of the x86 architecture that was introduced with the 80286 processor and continued with later processors. In protected mode, the CPU provides a set of features that enhance the robustness and security of the system.
+
+**Analogy with Real World:**
+Imagine a bustling city with various buildings, each serving a different purpose—residential buildings, offices, banks, and government facilities. Now, let's draw an analogy:
+
+1. **Real Mode (DOS Era):**
+   - Real mode is like a small village where everyone lives in simple houses, and there's no clear distinction between private and public spaces.
+   - It's easy for anyone to access or modify any part of the village, leading to potential chaos if someone behaves recklessly.
+
+2. **Protected Mode (Modern City):**
+   - Protected mode is akin to a modern city with skyscrapers, residential areas, commercial districts, and government buildings.
+   - Each building represents a different part of the system (e.g., user space, kernel space, device drivers).
+   - Memory protection is like security measures in place. Residential areas (user space) are separate from corporate offices (kernel space), and access is controlled.
+   - Multitasking is like people working in various offices simultaneously, each unaware of what others are doing.
+
+In protected mode:
+- **Memory Protection:** Each "building" (segment) has its own set of rules, and one cannot easily interfere with the affairs of another.
+- **Privilege Levels:** There are different privilege levels, like different security clearances. Some operations are allowed only at higher privilege levels (closer to the kernel).
+- **Multitasking:** Multiple tasks (processes) can run concurrently without interfering with each other.
+
+This analogy simplifies the concept, but it captures the essence of how protected mode brings order, security, and multitasking capabilities to the x86 architecture. Modern operating systems, such as Windows and Linux, leverage protected mode for enhanced stability and security.
+
