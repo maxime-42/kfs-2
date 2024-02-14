@@ -121,3 +121,25 @@ In protected mode:
 
 This analogy simplifies the concept, but it captures the essence of how protected mode brings order, security, and multitasking capabilities to the x86 architecture. Modern operating systems, such as Windows and Linux, leverage protected mode for enhanced stability and security.
 
+
+
+## Local descriptor table:
+It seems there might be a slight confusion in terminology. The correct term is "Local Descriptor Table" (LDT), not "local description table." Let me provide information about the Local Descriptor Table (LDT):
+
+The Local Descriptor Table (LDT) is a data structure similar to the Global Descriptor Table (GDT) in x86 architecture. Both the GDT and LDT are used for managing memory segmentation and access control. However, there are key differences:
+
+1. **Scope:**
+   - **GDT (Global Descriptor Table):** The GDT is a system-wide table that is shared among all processes and threads. It is used to define global segment descriptors.
+   - **LDT (Local Descriptor Table):** The LDT is specific to each process or thread. Each process/thread can have its own LDT, and the LDT is used to define local segment descriptors for that particular process/thread.
+
+2. **Purpose:**
+   - **GDT:** It is primarily used for defining global memory segments such as code, data, and stack segments. The GDT is shared among all processes and is typically set up by the operating system during system initialization.
+   - **LDT:** It allows individual processes to have their own set of segment descriptors with different access permissions. This provides a level of isolation between processes.
+
+3. **Usage:**
+   - **GDT:** Commonly used for system-level segments and shared memory areas.
+   - **LDT:** Used for process-specific segments, enabling processes to have their own custom memory protection settings.
+
+The use of LDT has become less common in modern operating systems. Most modern operating systems rely on the GDT and other mechanisms for memory protection and process isolation. The x86 architecture provides a way to load and switch between different LDTs using the `lldt` instruction.
+
+It's important to note that the LDT is an optional feature, and its usage has diminished over time. In modern systems, the GDT, along with other features like paging, provides sufficient memory protection and isolation for processes.
