@@ -121,3 +121,60 @@ In protected mode:
 
 This analogy simplifies the concept, but it captures the essence of how protected mode brings order, security, and multitasking capabilities to the x86 architecture. Modern operating systems, such as Windows and Linux, leverage protected mode for enhanced stability and security.
 
+
+
+## Local descriptor table:
+
+The Local Descriptor Table (LDT) is a data structure similar to the Global Descriptor Table (GDT) in x86 architecture. Both the GDT and LDT are used for managing memory segmentation and access control. However, there are key differences:
+
+1. **Scope:**
+   - **GDT (Global Descriptor Table):** The GDT is a system-wide table that is shared among all processes and threads. It is used to define global segment descriptors.
+   - **LDT (Local Descriptor Table):** The LDT is specific to each process or thread. Each process/thread can have its own LDT, and the LDT is used to define local segment descriptors for that particular process/thread.
+
+2. **Purpose:**
+   - **GDT:** It is primarily used for defining global memory segments such as code, data, and stack segments. The GDT is shared among all processes and is typically set up by the operating system during system initialization.
+   - **LDT:** It allows individual processes to have their own set of segment descriptors with different access permissions. This provides a level of isolation between processes.
+
+3. **Usage:**
+   - **GDT:** Commonly used for system-level segments and shared memory areas.
+   - **LDT:** Used for process-specific segments, enabling processes to have their own custom memory protection settings.
+
+The use of LDT has become less common in modern operating systems. Most modern operating systems rely on the GDT and other mechanisms for memory protection and process isolation. The x86 architecture provides a way to load and switch between different LDTs using the `lldt` instruction.
+
+It's important to note that the LDT is an optional feature, and its usage has diminished over time. In modern systems, the GDT, along with other features like paging, provides sufficient memory protection and isolation for processes.
+
+
+The Global Descriptor Table (GDT) is a data structure used by the x86 architecture to define memory segments and their access attributes. It plays a crucial role in memory protection and privilege level management in the x86 architecture.
+
+Here's a high-level overview of how the GDT works with the processor and memory:
+
+1. **Segmentation and Memory Protection:**
+   - The x86 architecture supports segmentation, where the memory is divided into segments, and each segment is assigned specific attributes.
+   - The GDT contains entries for various segments, such as code, data, and stack segments. Each entry specifies the base address, limit, access rights, and other attributes for a segment.
+
+2. **Descriptor Loading:**
+   - During system initialization, the operating system sets up the GDT with the necessary segment descriptors.
+   - The GDT is loaded into memory, and its location and size are stored in the Global Descriptor Table Register (`GDTR`).
+
+3. **Privilege Levels:**
+   - Each segment descriptor in the GDT has an associated privilege level (0 to 3). This indicates the privilege level required to access the segment.
+   - The processor operates at a particular privilege level, and access to segments is restricted based on privilege levels. For example, user code typically runs at privilege level 3 (user mode), while kernel code runs at privilege level 0 (kernel mode).
+
+4. **Memory Access Checks:**
+   - When a memory access is attempted, the processor checks the GDT to determine the access rights and privilege level required for the specified segment.
+   - If the access violates the access rights or privilege level, a processor exception (e.g., a general protection fault) is triggered.
+
+5. **Task Switching and TSS:**
+   - The GDT may also include entries for Task State Segments (TSS) used in task switching.
+   - Task switching involves switching between different execution contexts, such as switching between user and kernel modes or switching between different tasks.
+
+6. **Loading GDTR:**
+   - The `lgdt` instruction is used to load the GDTR, informing the processor about the location and size of the GDT.
+
+7. **Enabling Protection:**
+   - The most significant bit of the Control Register 0 (CR0) is the Protection Enable (PE) bit. Setting this bit enables memory protection, and it is typically set after loading the GDT.
+
+8. **Segment Register Loading:**
+   - Once the GDT is loaded and protection is enabled, the operating system sets up segment registers (e.g., `cs`, `ds`, `es`, `ss`) with appropriate segment selectors pointing to entries in the GDT.
+
+Overall, the GDT serves as a mechanism for the x86 architecture to manage memory segmentation, protection, and privilege levels, providing a foundation for secure and controlled execution of code in different parts of the system.
