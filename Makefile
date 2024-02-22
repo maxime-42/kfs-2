@@ -8,11 +8,12 @@ CYAN		=	\033[036m
 BOLD		=	\033[1m
 RESET   	=	\033[0m
 
+TARGET		= myos
+
+ISO		= $(TARGET).iso
 
 KERNEL_OUT = myos.bin
 
-#CFLAGS = -std=gnu99 -ffreestanding -O2 -Wall -Wextra
-#LDFLAGS = -ffreestanding -O2 -nostdlib
 
 FLAGS		= -Wall -Wextra -Werror -fno-builtin -fno-builtin -fno-builtin -nostdlib -nodefaultlibs
 
@@ -20,11 +21,11 @@ GRUB_CFG 	= grub.cfg
 
 BOOT		= boot.s
 
-SRC		= kernel.c libk.c gdt.c ft_hexdump.c 
+SRC		= kernel.c libk.c gdt.c  
 
 LINKER		= linker.ld
 
-OBJ		= boot.o kernel.o libk.o gdt.o ft_hexdump.o 
+OBJ		= boot.o kernel.o libk.o gdt.o  
 
 # **************************************************************************** #
 # 📖 RULES
@@ -38,6 +39,8 @@ build: fclean
 	@echo "$(BOLD)$(GREEN)[✓] KERNEL BUILD DONE$(RESET)"
 	@ld -m elf_i386 -T ${LINKER} -o ${KERNEL_OUT} ${OBJ}
 	@echo "$(BOLD)$(GREEN)[✓] KERNEL LINK DONE$(RESET)"
+
+
 
 
 clean:
