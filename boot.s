@@ -1,4 +1,3 @@
-bits 32
 section .multiboot
 	dd 0x1BADB002	; Magic number
 	dd 0x0			; Flags
@@ -23,15 +22,9 @@ load_gdt:
 	mov ax, 0x18
 	mov gs, ax
 
-	jmp 0x08:.flush
-.flush:
 	ret
 
-
 _start:
-	mov esp, stack_space        	; set stack pointer
-	cli				; Disable interrupts
-	mov esp, stack_space
 	call kmain
 	hlt
 

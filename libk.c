@@ -9,21 +9,113 @@ uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;
 uint16_t terminal_col = 0;
 
+ void copyFunction(void *srcFunction, void *destFunction, size_t size) {
+    // Assuming destFunction is the address where you want to copy the source function
+    // This is a simplified example, and it might not work on all platforms
 
-void	*kmemset(void *b, int c, unsigned int len)
-{
-	unsigned int	i;
+    // Copy the bytes of the function from source to destination
+    uint8_t* src = (uint8_t*)srcFunction;
+    uint8_t* dest = (uint8_t*)destFunction;
 
-	i = 0;
-	while (i < len)
-	{
-		((char *)(b))[i] = c;
-	i++;
-	}
-	return b;
+    // Assuming the function size is fixed, adjust this accordingly
+
+    for (size_t i = 0; i < size ; ++i) {
+        dest[i] = src[i];
+    }
 }
 
-#include <stdint.h>
+
+void print_register()
+{
+  unsigned int ebp, esp, eip, ecx, edx, ebx, eax, esi, edi;
+
+    GET_EBP(ebp);
+    GET_ESP(esp);
+    GET_EIP(eip);
+    GET_ECX(ecx);
+    GET_EDX(edx);
+    GET_EBX(ebx);
+    GET_EAX(eax);
+    GET_ESI(esi);
+    GET_EDI(edi);
+
+    ft_putstr(itoa_base(ebp, 16));
+    ft_putchar('\n');
+    ft_putstr(itoa_base(esp, 16));
+    ft_putstr(itoa_base(eip, 16));
+    ft_putchar('\n');
+    ft_putstr(itoa_base(ecx, 16));
+    ft_putchar('\n');
+    ft_putstr(itoa_base(edx, 16));
+    ft_putchar('\n');
+    ft_putstr(itoa_base(ebx, 16));
+    ft_putchar('\n');
+    ft_putstr(itoa_base(eax, 16));
+    ft_putchar('\n');
+    ft_putstr(itoa_base(esi, 16));
+    
+    ft_putchar('\n');
+    ft_putstr(itoa_base(edi, 16));
+}
+
+
+void	*kmemset(void *b, int c, size_t len)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)b;
+	while (len--)
+		*p++ = (unsigned char)c;
+	return (b);
+}
+
+
+void	*kmemcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char	*p_dest;
+	unsigned char	*p_src;
+
+	p_src = (unsigned char *)src;
+	p_dest = (unsigned char *)dest;
+	if (dest == src)
+		return (dest);
+	while (n--)
+		*(p_dest++) = *(p_src++);
+	return (dest);
+}
+
+
+
+char	*itoa_base(int num, int base)
+{
+    static char text[33];  // Max length for 32-bit integer in binary + null terminator
+    int loc = 32;
+	kmemset(&text, 0, sizeof(text));
+    if (num == 0)
+    {
+        text[--loc] = '0';
+    }
+    else
+    {
+        int neg = 0;
+        if (num < 0)
+        {
+            neg = 1;
+            num = -num;
+        }
+        while (num)
+        {
+            int remainder = num % base;
+            text[--loc] = (remainder < 10) ? ('0' + remainder) : ('A' + remainder - 10);
+            num /= base;
+        }
+        if (neg)
+            text[--loc] = '-';
+    }
+    return &text[loc];
+}
+
+
 
 void hex_to_str(uint32_t addr, char *result) {
     // Define the hexadecimal characters
@@ -166,10 +258,13 @@ void				ft_hexdump(void *mem_addr, uint32_t size)
 	uint32_t 		addr = *ptrAddr;
 	char			*str = (char *)addr;
 	char 			addr_str[9];
-	
+	//char			*ptr = NULL;
+
+	ptrAddr[8] = 'B';	
 	while (j < size)
 	{
 		hex_to_str(addr, addr_str);
+		//ptr = itoa_base(addr, 16);
 		print_addr(addr_str, addr);
 		ft_putchar(' ');
 	       	for (uint32_t i = 0 ; i < 16; i++)

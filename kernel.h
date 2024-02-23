@@ -1,6 +1,20 @@
 #include <stdint.h>
+#include <stddef.h>
 #ifndef GDT_H
 # define GDT_H
+
+
+#define GET_EBP(x) __asm__ volatile("mov %%ebp, %0" : "=r"(x)::)
+#define GET_ESP(x) __asm__ volatile("mov %%esp, %0" : "=r"(x)::)
+#define GET_EIP(x) __asm__ volatile("movl $1f, %0; 1:" : "=r"(x))
+
+//#define GET_EIP(x) __asm__ volatile("mov %%eip, %0" : "=r"(x)::)
+#define GET_ECX(x) __asm__ volatile("mov %%ecx, %0" : "=r"(x)::)
+#define GET_EDX(x) __asm__ volatile("mov %%edx, %0" : "=r"(x)::)
+#define GET_EBX(x) __asm__ volatile("mov %%ebx, %0" : "=r"(x)::)
+#define GET_EAX(x) __asm__ volatile("mov %%eax, %0" : "=r"(x)::)
+#define GET_ESI(x) __asm__ volatile("mov %%esi, %0" : "=r"(x)::)
+#define GET_EDI(x) __asm__ volatile("mov %%edi, %0" : "=r"(x)::)
 
 
 #define SEG_DESCTYPE(x)  ((x) << 0x04) // Descriptor type (0 for system, 1 for code/data)
@@ -58,7 +72,7 @@
 
 
 /* ************************************************************************** */
-/* Structs                                                                    */
+/* 			Structs                                               */
 /* ************************************************************************** */
 
 typedef struct  __attribute__((packed)) gdt_entry
@@ -100,7 +114,7 @@ enum vga_color {
 
 
 /* ************************************************************************** */
-/*				 Prototype                                    */
+/*				Prototype                                     */
 /* ************************************************************************** */
 
 extern void load_gdt(uint32_t gdt_ptr);
@@ -122,5 +136,9 @@ void terminal_writechar(char c, char colour);
 
 void	hex_to_str(unsigned int addr, char *result);
 
-void ft_putstr_color(const char* str, uint32_t color);
+char	*itoa_base(int num, int base);
+void	*kmemcpy(void *dest, const void *src, size_t n);
+void	ft_putstr_color(const char* str, uint32_t color);
+void copyFunction(void *srcFunction, void *destFunction, size_t size);
+void print_register();
 #endif
