@@ -1,15 +1,13 @@
-#include <stddef.h>
-#include <stdint.h>
 #include "kernel.h"
-
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 80
 uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;
 uint16_t terminal_col = 0;
+static uint32_t color = VGA_COLOR_WHITE;
 
- void copyFunction(void *srcFunction, void *destFunction, size_t size) {
+void copyFunction(void *srcFunction, void *destFunction, size_t size) {
     // Assuming destFunction is the address where you want to copy the source function
     // This is a simplified example, and it might not work on all platforms
 
@@ -164,7 +162,7 @@ void terminal_writechar(char c, char colour)
 
 void ft_putchar(char c )
 {
-	terminal_writechar(c, VGA_COLOR_WHITE);
+	terminal_writechar(c, color);
 }
 
 void terminal_initialize()
@@ -199,20 +197,10 @@ void ft_putstr(const char* str)
     size_t len = strlen(str);
     for (size_t i = 0; i < len; i++)
     {
-        terminal_writechar(str[i], 15);
-    }
-}
-
-
-
-void ft_putstr_color(const char* str, uint32_t color)
-{
-    size_t len = strlen(str);
-    for (size_t i = 0; i < len; i++)
-    {
         terminal_writechar(str[i], color);
     }
 }
+
 
 
 
@@ -236,38 +224,63 @@ void	ft_print_hex(char c, int i)
 		ft_putchar(' ');
 	}
 	else 
-		ft_putstr("   ");
+		//ft_putstr("   ");
+		ft_putstr("  ");
 	if ((i + 1) % 8 == 0)
 		ft_putchar(' ');
 }
 
-void				print_addr(char *addr_str, uint32_t addr)
+void				print_name(uint32_t addr)
 {
-	uint32_t		color = VGA_COLOR_WHITE;
 
-	if (addr == GDT_ADDRESS)
-		color = VGA_COLOR_GREEN;
-	ft_putstr_color(addr_str, color);
-
+	if (addr == STRING_ADDRESS)
+	{	
+		ft_putstr("string   ");
+	}
+	else if (addr == MULTI_ADDRESS)
+	{
+		ft_putstr("multi    ");
+	}
+	else if (addr == GDT_ADDRESS)
+	{
+		ft_putstr("GDT      ");
+	}
+	else
+	{
+		ft_putstr(".......  ");
+	}
 }
 
-void				ft_hexdump(void *mem_addr, uint32_t size)
+void				set_color(uint32_t addr)
+{
+
+	if (addr == MULTI_ADDRESS ||  addr == STRING_ADDRESS || addr == GDT_ADDRESS)
+	{	
+		color = VGA_COLOR_GREEN;
+	}
+	else
+	{
+		color = VGA_COLOR_WHITE;
+	}
+}
+
+void			read_to_stack(void *mem_addr, uint32_t size)
 {
 	uint32_t		j = 0;
 	uint32_t		*ptrAddr = (uint32_t *)mem_addr;	
 	uint32_t 		addr = *ptrAddr;
 	char			*str = (char *)addr;
 	char 			addr_str[9];
-	//char			*ptr = NULL;
 
-	ptrAddr[8] = 'B';	
 	while (j < size)
 	{
+		set_color(addr);
 		hex_to_str(addr, addr_str);
 		//ptr = itoa_base(addr, 16);
-		print_addr(addr_str, addr);
+		ft_putstr(addr_str);
 		ft_putchar(' ');
-	       	for (uint32_t i = 0 ; i < 16; i++)
+	       	print_name(addr);
+		for (uint32_t i = 0 ; i < 16; i++)
 			ft_print_hex(str[i], i);
 
 		ft_putchar('|');
@@ -279,7 +292,5 @@ void				ft_hexdump(void *mem_addr, uint32_t size)
 		addr += 16;
 		str = (char *)addr;
 	}
-	(void)addr;
-	(void)str;
 }
 

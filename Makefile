@@ -16,9 +16,9 @@ FLAGS       = -Wall -Wextra -Werror -fno-builtin -nostdlib -nodefaultlibs
 
 GRUB_CFG    = grub.cfg
 BOOT        = boot.s
-SRC         = kernel.c libk.c gdt.c
+SRC         = kernel.c libk.c gdt.c write_to_stack.c 
 LINKER      = linker.ld
-OBJ         = boot.o kernel.o libk.o gdt.o
+OBJ         = boot.o kernel.o libk.o gdt.o write_to_stack.o 
 
 # **************************************************************************** #
 # 📖 RULES

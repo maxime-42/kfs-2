@@ -67,6 +67,8 @@
 			SEG_PRIV(3)     | SEG_DATA_RDWREXPD
 
 #define GDT_ADDRESS	0x00000800
+#define MULTI_ADDRESS    0x000007B0 
+#define STRING_ADDRESS	0x000007D0 
 #define GDT_ENTRIES	7
 #define FLAG_D_32	0xCF
 
@@ -114,8 +116,13 @@ enum vga_color {
 
 
 /* ************************************************************************** */
+/*				Global                                        */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
 /*				Prototype                                     */
 /* ************************************************************************** */
+
 
 extern void load_gdt(uint32_t gdt_ptr);
 
@@ -123,22 +130,27 @@ extern t_gdt_entry	gdt_entries[GDT_ENTRIES];
 extern t_gdt_ptr	*gdt_ptr;
 
 void	init_gdt();
-void	ft_hexdump(void *mem_addr, uint32_t size);
+//void	hexdump(void *mem_addr, uint32_t size);
 void	ft_putstr(const char* str);
 
 
-void terminal_initialize();
-void kernel_main(void); 
+void	terminal_initialize();
+void	kernel_main(void); 
 
-void ft_putchar(char c );
-void terminal_writechar(char c, char colour);
+void	ft_putchar(char c );
+void	terminal_writechar(char c, char colour);
 
 
-void	hex_to_str(unsigned int addr, char *result);
+//void	hex_to_str(unsigned int addr, char *result);
 
 char	*itoa_base(int num, int base);
 void	*kmemcpy(void *dest, const void *src, size_t n);
 void	ft_putstr_color(const char* str, uint32_t color);
-void copyFunction(void *srcFunction, void *destFunction, size_t size);
-void print_register();
+void	copyFunction(void *srcFunction, void *destFunction, size_t size);
+void	print_register();
+void	set_function();
+void	set_string();
+
+void				read_to_stack(void *mem_addr, uint32_t size);
+
 #endif
