@@ -9,7 +9,7 @@ void	set_string()
 {
 
 	void *ptr = (void *)STRING_ADDRESS;
-	char str[] = "hello world lenox";    	
+	char str[] = "hello world lenoxko";    	
 	kmemcpy(ptr, str, sizeof(str));
 
 

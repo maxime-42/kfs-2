@@ -9,6 +9,8 @@ global load_gdt
 global _start
 
 
+
+
 load_gdt:
 	mov eax, [esp + 4]
 	lgdt [eax]

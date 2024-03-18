@@ -125,7 +125,6 @@ enum vga_color {
 
 
 extern void load_gdt(uint32_t gdt_ptr);
-
 extern t_gdt_entry	gdt_entries[GDT_ENTRIES];
 extern t_gdt_ptr	*gdt_ptr;
 
